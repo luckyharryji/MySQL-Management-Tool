@@ -42,6 +42,9 @@ def get_all_people_info():
     return mysql_service.get_all_people_info()
 
 
+@app.route('/databases')
+def get_all_databases():
+    return mysql_service.get_database_names()
 
 @app.route('/')
 def show_entries():
