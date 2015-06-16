@@ -39,7 +39,7 @@ def teardown_request(exception):
 
 @app.route('/people/list')
 def get_all_people_info():
-    return mysql_service.get_people_list()
+    return mysql_service.get_all_people_info()
 
 
 
@@ -47,7 +47,7 @@ def get_all_people_info():
 def show_entries():
     cur = g.db.execute('select title,text from entries order by id DESC ')
     entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
-    return render_template('show_entries.html',entries = entries)
+    return render_template('show_entries.html', entries=entries)
 
 
 @app.route('/add', methods=['POST'])
