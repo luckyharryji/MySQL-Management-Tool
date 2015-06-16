@@ -3,12 +3,15 @@ import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash
 from contextlib import closing
-# from settings import FLASKR_SETTINGS
+from mysqlClient import MySqlClient
 
 
 # create our little application :)
 app = Flask(__name__)
 app.config.from_envvar('FLASKR_SETTINGS')
+
+
+mysql_service = MySqlClient('localhost', 3306, 'root', '19930801')
 
 
 def connect_db():
@@ -32,6 +35,12 @@ def teardown_request(exception):
     db = getattr(g, 'db', None)
     if db is not None:
         db.close()
+
+
+@app.route('/people/list')
+def get_all_people_info():
+    return mysql_service.get_people_list()
+
 
 
 @app.route('/')
