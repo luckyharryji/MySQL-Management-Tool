@@ -50,6 +50,8 @@ def get_all_databases():
 @app.route('/table/list')
 def get_all_tables():
     return mysql_service.get_tables_name()
+
+
 @app.route('/')
 def show_entries():
     cur = g.db.execute('select title,text from entries order by id DESC ')

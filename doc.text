@@ -1,0 +1,11 @@
+
+GET : /people/list
+获取所有人员信息
+
+---
+GET ： /databases
+获取所有数据库的名称
+
+---
+GET : /table/list
+获取指定数据库中所有表的名称
