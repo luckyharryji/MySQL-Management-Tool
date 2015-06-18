@@ -23,3 +23,12 @@ class MySqlClient(object):
         database_names = [row[0] for row in databases.fetchall()]
         databases.close()
         return json.dumps(database_names)
+
+
+    def get_tables_name(self):
+        table_list = self.db.cursor()
+        table_list.execute("use TestConnect")
+        table_list.execute("show tables")
+        table_names = [row[0] for row in table_list.fetchall()]
+        table_list.close()
+        return json.dumps(table_names)

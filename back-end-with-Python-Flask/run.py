@@ -46,6 +46,10 @@ def get_all_people_info():
 def get_all_databases():
     return mysql_service.get_database_names()
 
+
+@app.route('/table/list')
+def get_all_tables():
+    return mysql_service.get_tables_name()
 @app.route('/')
 def show_entries():
     cur = g.db.execute('select title,text from entries order by id DESC ')
