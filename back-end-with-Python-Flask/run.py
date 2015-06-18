@@ -1,9 +1,12 @@
 # all the imports
 import sqlite3
-from flask import Flask, request, session, g, redirect, url_for, \
+from flask import Flask, make_response, request, current_app, session, g, redirect, url_for, \
      abort, render_template, flash
 from contextlib import closing
 from mysqlClient import MySqlClient
+from datetime import timedelta
+from functools import update_wrapper
+from cross_domain import crossdomain
 
 
 # create our little application :)
@@ -43,6 +46,7 @@ def get_all_people_info():
 
 
 @app.route('/databases')
+@crossdomain(origin='*')
 def get_all_databases():
     return mysql_service.get_database_names()
 
