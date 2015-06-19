@@ -24,7 +24,6 @@ class MySqlClient(object):
         databases.close()
         return json.dumps(database_names)
 
-
     def get_tables_name(self):
         table_list = self.db.cursor()
         table_list.execute("use TestConnect")
@@ -32,3 +31,29 @@ class MySqlClient(object):
         table_names = [row[0] for row in table_list.fetchall()]
         table_list.close()
         return json.dumps(table_names)
+
+    def create_new_database(self, db_name):
+        try:
+            database_list = self.db.cursor()
+            database_list.execute("show databases")
+            for row in database_list.fetchall():
+                if db_name == row[0]:
+                    database_list.close()
+                    return json.dumps(dict(status="exist"))
+            database_list.execute("create database if not exists " + db_name)
+            database_list.close()
+            return json.dumps(dict(status="success"))
+        except MySQLdb.Error, e:
+            database_list.close()
+            print "Mysql ERROR %d : %s" % (e.args[0], e.args[1])
+            return json.dumps(dict(status="error", error=e.args[0], meassage=e.args[1]))
+
+    def delete_database(self, db_name):
+        try:
+            database_list = self.db.cursor()
+            database_list.execute("drop database if exists " + db_name)
+            database_list.close()
+            return json.dumps(dict(status="success"))
+        except MySQLdb.Error, e:
+            database_list.close()
+            return json.dumps(dict(status="error", error=e.args[0], meassage=e.args[1]))

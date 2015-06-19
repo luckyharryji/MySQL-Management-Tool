@@ -51,6 +51,15 @@ def get_all_databases():
     return mysql_service.get_database_names()
 
 
+@app.route('/add/database/<database_name>')
+def add_new_database(database_name):
+    return mysql_service.create_new_database(database_name)
+
+
+@app.route('/delete/database/<database_name>')
+def delete_database(database_name):
+    return mysql_service.delete_database(database_name)
+
 @app.route('/table/list')
 def get_all_tables():
     return mysql_service.get_tables_name()
